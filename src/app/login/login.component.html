@@ -1,0 +1,43 @@
+<app-nav
+[ruta]="'inicio'"
+[mensaje]="'REGRESAR'"
+></app-nav>
+
+
+<div class="menu" [hidden]="registrar">
+    <form>
+        <h1>INICIAR SESION</h1>
+        <input type="text" placeholder="user" (focus)="capturarActividad('trasaccion')" > <br><br>
+        <input type="password" placeholder="pass" (focus)="capturarActividad('trasaccion')"><br><br>
+        <button class="btn btn-light" type="submit" style="width: 100%;">EMPEZAR</button><br><br>
+        <button type="button" class="btn btn-light" (click)="irRegistro()" style="width: 100%;">REGISTRARSE</button>
+      </form>
+</div>
+
+<div class="menu" [hidden]="!registrar">
+    <form>
+        <h1>INICIAR SESION</h1>
+        <div class="row">
+            <div class="col">
+                <input type="text" placeholder="user" (focus)="capturarActividad('trasaccion')"> <br><br>
+            </div>
+            <div class="col">
+                <input type="password" placeholder="pass" (focus)="capturarActividad('trasaccion')"><br><br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input type="text" placeholder="user" (focus)="capturarActividad('trasaccion')"> <br><br>
+            </div>
+            <div class="col">
+                <input type="text" placeholder="user" (focus)="capturarActividad('trasaccion')"> <br><br>
+            </div>
+        </div>
+        <button class="button" type="submit">Purchase</button>
+        <button type="button" class="btn btn-light" (click)="irRegistro()" >INICIAR SESION</button>
+      </form>
+</div>
+
+
+
+<app-chatbox></app-chatbox>

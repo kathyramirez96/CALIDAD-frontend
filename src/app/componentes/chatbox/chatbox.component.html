@@ -1,0 +1,66 @@
+
+<div class="row cuerpo">
+    <div class="row caja" (click)="minimisar()">
+        <h5>ChatBox</h5>
+    </div>
+    <div [hidden]="main">
+        <div class="row">
+            <button class="boton primero" (click)="mostrarPagina(2)">BLOQUEAR</button>
+        </div>
+        <div class="row">
+            <button class="boton" (click)="mostrarPagina(3)">DESBLOQUEAR</button>
+        </div>
+        <div class="row">
+            <button class="boton" (click)="mostrarPagina(4)">RECUPERAR USUARIO</button>
+        </div>
+    </div>
+
+    <div [hidden]="bloq">
+        <div class="row">
+            <input class="boton primero" [(ngModel)]="cedula" placeholder="INGRESA CÉDULA">
+        </div>
+        <div class="row">
+            <button class="boton" (click)="bloquear()">BLOQUEAR</button>
+        </div>
+        <div class="row">
+            <button class="boton" (click)="mostrarPagina(1)">CANCELAR</button>
+        </div>
+    </div>
+
+    <div [hidden]="desb">
+        <div class="row">
+            <input class="boton primero" [(ngModel)]="cedula" placeholder="INGRESA CÉDULA">
+        </div>
+        <div class="row">
+            <button class="boton" (click)="enviarSMS()">ENVIAR SMS</button>
+        </div>
+        <div class="row">
+            <button class="boton" (click)="mostrarPagina(1)">CANCELAR</button>
+        </div>
+    </div>
+
+    <div [hidden]="recu">
+        <div class="row">
+            <input class="boton primero" [(ngModel)]="celular" placeholder="INGRESA CELULAR">
+        </div>
+        <div class="row">
+            <button class="boton" (click)="recuperar()">RECUPERAR</button>
+        </div>
+        <div class="row">
+            <button class="boton" (click)="mostrarPagina(1)">CANCELAR</button>
+        </div>
+    </div>
+   
+
+    <div [hidden]="sms">
+        <div class="row">
+            <input class="boton primero" type="password" [(ngModel)]="clave" placeholder="INGRESA CÓDIGO">
+        </div>
+        <div class="row">
+            <button class="boton" (click)="desbloquear()">DESBLOQUEAR</button>
+        </div>
+        <div class="row">
+            <button class="boton" (click)="mostrarPagina(1)">CANCELAR</button>
+        </div>
+    </div>
+</div>

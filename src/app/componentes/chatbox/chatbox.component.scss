@@ -1,0 +1,36 @@
+.caja{
+    text-align: center;
+    color: white;
+    background-color: rgb(27, 177, 177);
+    width: 150%;
+    position: relative;
+}
+.cuerpo{
+    text-align: center;
+    color: white;
+    border: 2px solid rgb(27, 177, 177);
+    width: 15%;
+    position: absolute;
+    bottom: 2%;
+    right: 10%;
+    padding: 1%;
+}
+
+.boton{
+    display: flex;
+    position: relative;
+    text-align: center;
+    border: 1px solid rgb(27, 177, 177);
+    color:rgb(27, 177, 177);
+    padding-top: 5px;   
+    padding-bottom: 5px;
+    margin-bottom: 21px;
+    width: 150%;    
+}
+.boton:hover{
+    background-color: rgb(27, 177, 177);
+    color: rgb(255, 255, 255);
+}
+.primero{
+    margin-top: 55px;
+}
