@@ -1,1 +1,29 @@
-<h1>hgla</h1>
+<div style="text-align: center; padding-left: 10%; margin: 20%; ">
+    <h1>DEBEN SER IGUALES</h1>
+
+
+
+    <div class="row" style="text-align: center;">
+        <div class="col-6">
+            <div class="row" *ngFor="let a of matrizA; let i = index">
+                <div class="col-1" *ngFor="let a2 of a;let j = index">
+                    <button (click)="cambiarValor(matrizA,i,j)" [style]="estilo[a2]" style="width: 50px; height: 40px;"></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="row" *ngFor="let a of matrizB; let i = index">
+                <div class="col-1" *ngFor="let a2 of a;let j = index">
+                    <button [style]="estilo[a2]" style="width: 50px; height: 40px;"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="text-align: center; margin-top: 20%;">
+        <div class="col-12">
+            <button type="button" class="btn btn-success" (click)="comprobar()"  data-dismiss="modal" >COMRPOBAR</button>
+        </div>
+    </div>
+
+</div>

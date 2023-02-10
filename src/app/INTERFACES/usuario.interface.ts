@@ -1,5 +1,6 @@
 export interface usuario {
     nombre?:string,
+    cedula?:string,
     apellido?:string,
     direccion?:string,
     correo?:string,
@@ -7,11 +8,15 @@ export interface usuario {
     pais?:string,
     genero?:string,
     telefono?:string,
+    celular?:string,
     usuario?:string,
     clave?:string,
+    sangre?:string,
+    altura?:string,
+    peso?:string,
     ip?:string,
     token?:string,
     responsable?:string,
     fecharegistro?:string,
-    estado?:string
+    estado?:string,
 }

@@ -16,10 +16,9 @@
     <form>
         <h1>INICIAR SESION</h1>
         <input type="text" placeholder="user" (focus)="capturarActividad('trasaccion')" > <br><br>
-        <input type="password" placeholder="pass" (focus)="capturarActividad('trasaccion')"><br><br>
+        <input type="text" placeholder="pass" (focus)="capturarActividad('trasaccion')"><br><br>
         <button class="btn btn-light" type="submit" style="width: 100%;">EMPEZAR</button><br><br>
         <button type="button" class="btn btn-light" (click)="irRegistro()" style="width: 100%;">REGISTRARSE</button><br><br>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">COMPROBAR</button>
     </form>
 </div>
 
@@ -27,26 +26,78 @@
     <form>
         <h1>INICIAR SESION</h1>
         <div class="row">
-            <div class="col">
-                <input type="text" placeholder="user" (focus)="capturarActividad('trasaccion')"> <br><br>
+            <div class="col-6">
+                <input type="text" placeholder="NOMBRE" [(ngModel)]="datos.nombre" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
             </div>
-            <div class="col">
-                <input type="password" placeholder="pass" (focus)="capturarActividad('trasaccion')"><br><br>
+            <div class="col-6">
+                <input type="text" placeholder="CEDULA" [(ngModel)]="datos.cedula" (focus)="capturarActividad('trasaccion')" name="something"><br><br>
             </div>
         </div>
         <div class="row">
-            <div class="col">
-                <input type="text" placeholder="user" (focus)="capturarActividad('trasaccion')"> <br><br>
+            <div class="col-6">
+                <input type="text" placeholder="APELLIDO" [(ngModel)]="datos.apellido" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
             </div>
-            <div class="col">
-                <input type="text" placeholder="user" (focus)="capturarActividad('trasaccion')"> <br><br>
+            <div class="col-6">
+                <input type="text" placeholder="DIRECCION" [(ngModel)]="datos.direccion" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
             </div>
         </div>
-        <button class="button" class="btn btn-light" type="submit">Purchase</button>
-        <button type="button" class="btn btn-light" (click)="irRegistro()" >INICIAR SESION</button>
+        <div class="row">
+            <div class="col-6">
+                <input type="text" placeholder="CORREO" [(ngModel)]="datos.correo" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
+            </div>
+            <div class="col-6">
+                <input type="text" placeholder="PROVINCIA" [(ngModel)]="datos.provincia" (focus)="capturarActividad('trasaccion')" name="something"><br><br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <input type="text" placeholder="PAIS" [(ngModel)]="datos.pais" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
+            </div>
+            <div class="col-6">
+                <input type="text" placeholder="GENERO" [(ngModel)]="datos.genero" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
+            </div>
+        </div>
+     
+        <div class="row">
+            <div class="col-6">
+                <input type="text" placeholder="TIPO SANGRE" [(ngModel)]="datos.sangre" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
+            </div>
+            <div class="col-6">
+                <input type="text" placeholder="ALTURA" [(ngModel)]="datos.altura" (focus)="capturarActividad('trasaccion')" name="something"><br><br>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <input type="text" placeholder="TELEFONO" [(ngModel)]="datos.telefono" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
+            </div>
+            <div class="col-6">
+                <input type="text" placeholder="CELULAR" [(ngModel)]="datos.celular" (focus)="capturarActividad('trasaccion')"  name="something" ><br><br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <input type="text" placeholder="USUARIO" [(ngModel)]="datos.usuario" (focus)="capturarActividad('trasaccion')"  name="something"> <br><br>
+            </div>
+            <div class="col-6">
+                <input type="password" placeholder="CLAVE" [(ngModel)]="datos.clave" (focus)="capturarActividad('trasaccion')"  name="something"> <br><br>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <input type="text" placeholder="PESO" [(ngModel)]="datos.peso" (focus)="capturarActividad('trasaccion')"  name="something"> <br><br>
+            </div>
+            <div class="col-6">
+                <input type="password" placeholder="REPETIR CLAVE" [(ngModel)]="CLAVE" (focus)="capturarActividad('trasaccion')"  name="something"> <br><br>  
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-primary" style="width: 100%;" data-toggle="modal" data-target=".bd-example-modal-lg">COMPROBAR</button><br><br>
+                <button class="button" class="btn btn-light" style="width: 100%;"type="submit" (click)="GUARDAR()">GUARDAR</button><br><br>
+                <button type="button" class="btn btn-light" style="width: 100%;" (click)="irRegistro()" >INICIAR SESION</button><br><br>        
+            </div>
+        </div>
       </form>
 </div>
-
-
-
-<app-chatbox></app-chatbox>
