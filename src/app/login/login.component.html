@@ -4,14 +4,23 @@
 ></app-nav>
 
 
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <app-modal></app-modal>
+    </div>
+  </div>
+</div>
+
 <div class="menu" [hidden]="registrar">
     <form>
         <h1>INICIAR SESION</h1>
         <input type="text" placeholder="user" (focus)="capturarActividad('trasaccion')" > <br><br>
         <input type="password" placeholder="pass" (focus)="capturarActividad('trasaccion')"><br><br>
         <button class="btn btn-light" type="submit" style="width: 100%;">EMPEZAR</button><br><br>
-        <button type="button" class="btn btn-light" (click)="irRegistro()" style="width: 100%;">REGISTRARSE</button>
-      </form>
+        <button type="button" class="btn btn-light" (click)="irRegistro()" style="width: 100%;">REGISTRARSE</button><br><br>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">COMPROBAR</button>
+    </form>
 </div>
 
 <div class="menu" [hidden]="!registrar">
@@ -33,7 +42,7 @@
                 <input type="text" placeholder="user" (focus)="capturarActividad('trasaccion')"> <br><br>
             </div>
         </div>
-        <button class="button" type="submit">Purchase</button>
+        <button class="button" class="btn btn-light" type="submit">Purchase</button>
         <button type="button" class="btn btn-light" (click)="irRegistro()" >INICIAR SESION</button>
       </form>
 </div>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { MostrarComprobar } from '../FUNCIONES/mensajes';
 import { DIADIFERENCIA, HOY } from '../FUNCIONES/moment';
 import { HttpService } from '../SERVICIOS/servicios.service';
 
@@ -27,6 +28,13 @@ export class LoginComponent {
       this.registrar = false;
     else
       this.registrar = true;
+  }
+
+
+
+
+  comprobar(){
+    MostrarComprobar();
   }
 
 

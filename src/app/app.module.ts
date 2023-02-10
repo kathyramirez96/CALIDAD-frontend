@@ -9,6 +9,7 @@ import { ChatboxComponent } from './componentes/chatbox/chatbox.component';
 import { FormsModule, ReactiveFormsModule   } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ModalComponent } from './componentes/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
     InicioComponent,
     NavComponent,
     ChatboxComponent,
-    LoginComponent
+    LoginComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
