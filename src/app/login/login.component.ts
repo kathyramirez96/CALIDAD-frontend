@@ -14,8 +14,10 @@ import { UsuarioService } from '../SERVICIOS/usuario.service';
 })
 export class LoginComponent {
 
+  lenguaje:string = localStorage.getItem("lenguaje") || "es";
   CLAVE:string="";
   SALIDA:any;
+  existeUsuario:boolean = false;
   datos:usuario = {
     nombre:"",
     cedula:"",
@@ -33,7 +35,35 @@ export class LoginComponent {
     altura:"",
     peso:""
   };
+  t_datos:usuario = {
+    nombre:"",
+    cedula:"",
+    apellido:"",
+    direccion:"",
+    correo:"",
+    provincia:"",
+    pais:"",
+    genero:"",
+    telefono:"",
+    celular:"",
+    usuario:"",
+    clave:"",
+    sangre:"",
+    altura:"",
+    peso:""
+  };
 
+
+
+  titulo:string="";
+  titluo2:string="";
+  t_user:string="";
+  t_pass:string="";
+  t_in:string="";
+  t_reg:string="";
+  t_comp:string="";
+  t_guard:string="";
+  t_Regresar:string="";
   registrar:boolean = false;
   constructor(
     private readonly _form: FormBuilder,
@@ -43,12 +73,93 @@ export class LoginComponent {
 
   async ngOnInit() {
     //CAPTURAR LA ACTIVIDAD CADA QUE INGRESA
+    this.cargarIdioma(this.lenguaje)
     await this.capturarActividad("sesion");
     (await this._user.obtenerUsuarios()).subscribe(res=>{
-      console.log(res);
-      
+      //console.log(res);
     })
     
+  }
+
+  cargarIdioma(len:string){
+    if(len === "es"){
+      this.titulo = "Iniciar Sesion"
+      this.titluo2 = "Registrarse"
+      this.t_user = "USUARIO";
+      this.t_pass = "CONTRASEÑA";
+      this.t_in="INGRESAR"
+      this.t_reg="REGISTRARSE"
+      this.t_comp="COMPROBAR"
+      this.t_guard = "GUARDAR"
+      this.t_datos.nombre = "NOMBRE"
+      this.t_datos.cedula="CEDULA";
+      this.t_datos.apellido="APELLIDO";
+      this.t_datos.direccion="DIRECCION";
+      this.t_datos.correo="CORREO";
+      this.t_datos.provincia="PROVINCIA";
+      this.t_datos.pais="PAIS";
+      this.t_datos.genero="GENERO";
+      this.t_datos.telefono="TELEFONO";
+      this.t_datos.celular="CELULAR";
+      this.t_datos.usuario="USUARIO";
+      this.t_datos.clave="CLAVE";
+      this.t_datos.sangre="TIPO SANGRE";
+      this.t_datos.altura="ALTURA";
+      this.t_datos.peso="PESO";
+      this.t_Regresar = "REGRESAR"
+    }
+    if(len === "in"){
+      this.titulo = "Log in"
+      this.titluo2 = "register";
+      this.t_user = "USER";
+      this.t_pass = "PASSWORD";
+      this.t_in="GET INTO"
+      this.t_reg="CHECK IN"
+      this.t_comp="FIND OUT"
+      this.t_guard = "SAVE"
+      this.t_datos.nombre = "NAME"
+      this.t_datos.cedula="CEDULA";
+      this.t_datos.apellido="APELLIDO";
+      this.t_datos.direccion="DIRECCION";
+      this.t_datos.correo="CORREO";
+      this.t_datos.provincia="PROCINVIA";
+      this.t_datos.pais="PAIS";
+      this.t_datos.genero="GENERO";
+      this.t_datos.telefono="TELEFONO";
+      this.t_datos.celular="CELULAR";
+      this.t_datos.usuario="USUARIO";
+      this.t_datos.clave="CLAVE";
+      this.t_datos.sangre="TIPO SANGRE";
+      this.t_datos.altura="ALTURA";
+      this.t_datos.peso="PESO";
+      this.t_Regresar = "RETURN"
+    }
+    if(len === "fc"){
+      this.titulo = "Commencer la session"
+      this.titluo2 = "Enregistrement";
+      this.t_user = "UTILISATEUR";
+      this.t_pass = "MOT DE PASSE";
+      this.t_in="ENTRER DANS"
+      this.t_reg="ENREGISTREMENT"
+      this.t_comp="DÉCOUVRIR",
+      this.t_guard = "SAUVEGARDER";
+      this.t_datos.nombre = "NOM"
+      this.t_datos.cedula="IDENTIFICATION";
+      this.t_datos.apellido="LAST NAME";
+      this.t_datos.direccion="ADDRESS";
+      this.t_datos.correo="MAIL";
+      this.t_datos.provincia="PROVINCE";
+      this.t_datos.pais="COUNTRY";
+      this.t_datos.genero="GENDER";
+      this.t_datos.telefono="PHONE";
+      this.t_datos.celular="CELL PHONE";
+      this.t_datos.usuario="USER";
+      this.t_datos.clave="PASSWORD";
+      this.t_datos.sangre="BLOOD TYPE";
+      this.t_datos.altura="HEIGHT";
+      this.t_datos.peso="WEIGHT";
+      this.t_Regresar = "RETOURNER";
+    }
   }
 
   irRegistro(){
@@ -111,6 +222,13 @@ export class LoginComponent {
   }
 
 
+  ingresar(){
+    if(this.existeUsuario)
+      return MostrarMensaje("Bienvenido")
+    return MostrarMensaje("Credenciales incorrectas")
+  }
+
+  onKeypressEvent(event: any){}
 
 
   comprobar(){
@@ -118,13 +236,24 @@ export class LoginComponent {
   }
 
 
+  obtenerContadores(tipo:string){
+    let contador = 0;
+    try{
+      contador = JSON.parse(JSON.stringify(localStorage.getItem(tipo)));
+      contador = JSON.parse(""+contador).contador      
+    }catch(err){
+      contador = 0;
+    }
+    return ""+tipo+"es = "+contador;
+  }
+
 
   async capturarActividad(tipo:string){
     const data:any = {};
     //Al cargar la pagina para sesion activas diaris traer de la base ip - fecha - contador;
     //BUSCAR POR IP y TIPO EN BASE
     const ipActual:any =  await this._serv.obtenerIP();
-    const informacion =  JSON.parse(localStorage.getItem("data") || "{}");//traer de base por IP y TIPO
+    const informacion =  JSON.parse(localStorage.getItem(tipo) || "{}");//traer de base por IP y TIPO
     //METODO PARA BUSAR POR IP aqui ->
     if(informacion.tipo === tipo){
       if(ipActual.ip === informacion.ip){
@@ -136,13 +265,13 @@ export class LoginComponent {
           data.fecha = HOY;
           data.contador= data.contador + 1;
           data.tipo = tipo;
-          localStorage.setItem("data",JSON.stringify(data)); //ALMACENAR EN BASE
+          localStorage.setItem(tipo,JSON.stringify(data)); //ALMACENAR EN BASE
         }else{
           data.contador = 0;
           data.contador=+1;
           data.tipo = tipo;
           data.fecha = HOY;
-          localStorage.setItem("data",JSON.stringify(data));//ALMACENAR EN BASE
+          localStorage.setItem(tipo,JSON.stringify(data));//ALMACENAR EN BASE
         }
       }else{
           data.ip = ipActual.ip;
@@ -150,7 +279,7 @@ export class LoginComponent {
           data.contador=+1;
           data.tipo = tipo;
           data.fecha = HOY;
-          localStorage.setItem("data",JSON.stringify(data));//ALMACENAR EN BASE
+          localStorage.setItem(tipo,JSON.stringify(data));//ALMACENAR EN BASE
       }
     }else{
       data.ip = ipActual.ip;
@@ -158,7 +287,7 @@ export class LoginComponent {
       data.contador=+1;
       data.tipo = tipo;
       data.fecha = HOY;
-      localStorage.setItem("data",JSON.stringify(data));//ALMACENAR EN BASE
+      localStorage.setItem(tipo,JSON.stringify(data));//ALMACENAR EN BASE
     }
   }
 }
