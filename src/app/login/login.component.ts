@@ -294,6 +294,7 @@ export class LoginComponent {
     if(usuario.estado === "error")
       return MensajeError(usuario.estado,usuario.mensaje);
     
+    localStorage.setItem("logeo",usuario)
     return MensajeExito("Éxito","Bienvenido")
     
   }

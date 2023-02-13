@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule   } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalComponent } from './componentes/modal/modal.component';
+import { TiendaComponent } from './tienda/tienda.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ModalComponent } from './componentes/modal/modal.component';
     NavComponent,
     ChatboxComponent,
     LoginComponent,
-    ModalComponent
+    ModalComponent,
+    TiendaComponent
   ],
   imports: [
     BrowserModule,
