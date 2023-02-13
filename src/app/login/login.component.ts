@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { lastValueFrom } from 'rxjs';
-import { MostrarComprobar, MostrarMensaje } from '../FUNCIONES/mensajes';
+import { MensajeError, MensajeExito, MostrarComprobar, MostrarMensaje } from '../FUNCIONES/mensajes';
 import { DIADIFERENCIA, HOY } from '../FUNCIONES/moment';
 import { usuario } from '../INTERFACES/usuario.interface';
 import { HttpService } from '../SERVICIOS/servicios.service';
@@ -14,6 +14,10 @@ import { UsuarioService } from '../SERVICIOS/usuario.service';
 })
 export class LoginComponent {
 
+  ingresoInfo:any ={
+    user:"",
+    pass:""
+  };
   lenguaje:string = localStorage.getItem("lenguaje") || "es";
   CLAVE:string="";
   SALIDA:any;
@@ -72,6 +76,7 @@ export class LoginComponent {
   ) {}
 
   async ngOnInit() {
+    this.limpiarVariables();
     //CAPTURAR LA ACTIVIDAD CADA QUE INGRESA
     this.cargarIdioma(this.lenguaje)
     await this.capturarActividad("sesion");
@@ -79,6 +84,11 @@ export class LoginComponent {
       //console.log(res);
     })
     
+  }
+
+
+  limpiarVariables(){
+    localStorage.setItem("humano","false");
   }
 
   cargarIdioma(len:string){
@@ -171,20 +181,39 @@ export class LoginComponent {
 
 
   async GUARDAR(){
- 
+
     if(!this.validar())
      return MostrarMensaje("Ingresar todos los datos");
-    
+    if(!this.validarCorreo(this.datos.correo))
+      return MostrarMensaje("El correo esta incorrecto por favor verificar");
+    if(!this.validarTienrNumeros(this.datos.nombre))
+      return MostrarMensaje("El nombre no puede tener números");
+    if(!this.validarTienrNumeros(this.datos.apellido))
+      return MostrarMensaje("El apellido no puede tener números");
+    if(!this.validarTienrNumeros(this.datos.provincia))
+      return MostrarMensaje("La provincia no puede tener números");
+    if(!this.validarTienrNumeros(this.datos.pais))
+      return MostrarMensaje("El pais no puede tener números");
+    if(!this.validaLongitud(""+this.datos.cedula,10))
+      return MensajeError("Error","Longitud de la cédula incorrecta");
+    if(!this.validaLongitud(""+this.datos.telefono,8))
+      return MensajeError("Error","Longitud del teléfono incorrecta, añadir codigo provincia");
+    if(!this.validaLongitud(""+this.datos.celular,9))
+      return MensajeError("Error","Longitud del célular es incorrecta");
     if(!this.validarHumano())
       return MostrarMensaje("Comprueba que eres humano");
-    
     if(this.CLAVE !== this.datos.clave)
-      return MostrarMensaje("Las claves no coinciden")
-    
-     const a = await lastValueFrom(await this._user.guardarUsuari(this.datos));
-     console.log(a);
-     
+      return MostrarMensaje("Las claves no coinciden");
 
+    
+    
+     const a:any = await lastValueFrom(await this._user.guardarUsuari(this.datos));
+     console.log(a);
+
+     if(a.estado === "error")
+      return MensajeError(a.estado,a.mensaje);
+    this.datos = {};
+    return MensajeExito("Éxito","El usuario se creó");
   }
 
 
@@ -209,6 +238,39 @@ export class LoginComponent {
   }
 
 
+  validarTienrNumeros(texto:any){
+    let pasa = true;
+    if(texto === undefined)
+      return false;
+    for(let i = 0; i < texto.length; i++){
+      if(texto.charAt(i) in [1,2,3,4,5,6,7,8,9,0])
+        return false
+    }
+    return pasa;
+  }
+
+  validaLongitud(texto:any, len:number){
+    let esCorrecto = true;    
+    if(texto.length !== len)
+      esCorrecto = false;
+    return esCorrecto
+  }
+
+  validarCorreo(texto:any){
+    let pasa = false;
+    let caracter = 0;
+    if(texto === undefined)
+      return false;
+    for(let i = 0; i < texto.length; i++){
+      if(texto.charAt(i) === "@" || texto.charAt(i) === ".")
+        caracter++;
+    }
+    if(caracter > 1)
+      return true;
+    return pasa;
+  }
+
+
   validarHumano(){
     try{
       const a = localStorage.getItem("humano");
@@ -222,10 +284,18 @@ export class LoginComponent {
   }
 
 
-  ingresar(){
-    if(this.existeUsuario)
-      return MostrarMensaje("Bienvenido")
-    return MostrarMensaje("Credenciales incorrectas")
+  async ingresar(){
+    if(this.ingresoInfo.user==="" || this.ingresoInfo.pass==="")
+      return MostrarMensaje("Los campos están vacíos");
+    
+    const usuario:any = await lastValueFrom(
+      await this._user.iniciarSesion({usuario:this.ingresoInfo.user,clave:this.ingresoInfo.pass}));
+    
+    if(usuario.estado === "error")
+      return MensajeError(usuario.estado,usuario.mensaje);
+    
+    return MensajeExito("Éxito","Bienvenido")
+    
   }
 
   onKeypressEvent(event: any){}
@@ -246,6 +316,7 @@ export class LoginComponent {
     }
     return ""+tipo+"es = "+contador;
   }
+
 
 
   async capturarActividad(tipo:string){

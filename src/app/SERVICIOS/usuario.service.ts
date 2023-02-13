@@ -27,4 +27,10 @@ export class UsuarioService {
     return this._http.get(url);
   }
 
+
+  async iniciarSesion(body:any){
+    const url = `${enviroment.host}/usuarios/ingreso-usuarios`;
+    return this._http.post(url,body);
+  }
+
 }

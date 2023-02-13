@@ -18,8 +18,8 @@
 <div class="menu" [hidden]="registrar">
     <form>
         <h1>{{titulo}}</h1>
-        <input type="text" [placeholder]="t_user" (focus)="capturarActividad('trasaccion')" > <br><br>
-        <input type="password" [placeholder]="t_pass" (focus)="capturarActividad('trasaccion')"><br><br>
+        <input type="text" [placeholder]="t_user" [(ngModel)]="ingresoInfo.user" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
+        <input type="password" [placeholder]="t_pass" [(ngModel)]="ingresoInfo.pass" (focus)="capturarActividad('trasaccion')" name="something"><br><br>
         <button class="btn btn-light color" type="submit" style="width: 100%;" (click)="ingresar()" 
         (keypress)="onKeypressEvent($event)">{{t_in}}</button><br><br>
         <button type="button" class="btn btn-light" (click)="irRegistro()" style="width: 100%;">{{t_reg}}</button><br><br>
@@ -31,7 +31,8 @@
         <h1>{{titluo2}}</h1>
         <div class="row">
             <div class="col-6">
-                <input type="text" [placeholder]="t_datos.nombre" [(ngModel)]="datos.nombre" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
+                
+                <input type="text" [placeholder]="t_datos.nombre"  [(ngModel)]="datos.nombre" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
             </div>
             <div class="col-6">
                 <input type="number" [placeholder]="t_datos.cedula" [(ngModel)]="datos.cedula" (focus)="capturarActividad('trasaccion')" name="something"><br><br>
@@ -58,13 +59,22 @@
                 <input type="text" [placeholder]="t_datos.pais" [(ngModel)]="datos.pais" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
             </div>
             <div class="col-6">
-                <input type="text" [placeholder]="t_datos.genero" [(ngModel)]="datos.genero" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
+                <select  [(ngModel)]="datos.genero" (focus)="capturarActividad('trasaccion')" name="something">
+                    <option value="hombre">Hombre</option>
+                    <option value="mujer">Mujer</option>
+                    <option value="na">Sin Especificar</option>
+                  </select><br><br>
             </div>
         </div>
      
         <div class="row">
             <div class="col-6">
-                <input type="text" [placeholder]="t_datos.sangre" [(ngModel)]="datos.sangre" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
+                <select [(ngModel)]="datos.sangre" (focus)="capturarActividad('trasaccion')" name="something">
+                    <option value="o">O</option>
+                    <option value="a">A</option>
+                    <option value="b">B</option>
+                    <option value="ab">AB</option>
+                  </select><br><br>
             </div>
             <div class="col-6">
                 <input type="number" [placeholder]="t_datos.altura" [(ngModel)]="datos.altura" (focus)="capturarActividad('trasaccion')" name="something"><br><br>
@@ -73,10 +83,10 @@
 
         <div class="row">
             <div class="col-6">
-                <input type="text" [placeholder]="t_datos.telefono" [(ngModel)]="datos.telefono" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
+                <input type="number" [placeholder]="t_datos.telefono" [(ngModel)]="datos.telefono" (focus)="capturarActividad('trasaccion')" name="something"> <br><br>
             </div>
             <div class="col-6">
-                <input type="text" [placeholder]="t_datos.celular" [(ngModel)]="datos.celular" (focus)="capturarActividad('trasaccion')"  name="something" ><br><br>
+                <input type="number" [placeholder]="t_datos.celular" [(ngModel)]="datos.celular" (focus)="capturarActividad('trasaccion')"  name="something" ><br><br>
             </div>
         </div>
         <div class="row">

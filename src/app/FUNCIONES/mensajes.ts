@@ -21,3 +21,20 @@ export function MostrarComprobar(){
           }
       });
 }
+
+export function MensajeError(titulo:string,mensaje:string){
+  Swal.fire({
+    icon: 'error',
+    title: titulo,
+    text: mensaje
+  })
+}
+
+
+export function MensajeExito(titulo:string,mensaje:string){
+  Swal.fire({
+    icon: 'success',
+    title: titulo,
+    text: mensaje
+  })
+}
