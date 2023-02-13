@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { MensajeError, MensajeExito, MostrarComprobar, MostrarMensaje } from '../FUNCIONES/mensajes';
 import { DIADIFERENCIA, HOY } from '../FUNCIONES/moment';
@@ -72,7 +73,8 @@ export class LoginComponent {
   constructor(
     private readonly _form: FormBuilder,
     private readonly _serv:HttpService,
-    private readonly _user:UsuarioService
+    private readonly _user:UsuarioService,
+    private readonly _router:Router
   ) {}
 
   async ngOnInit() {
@@ -295,7 +297,8 @@ export class LoginComponent {
       return MensajeError(usuario.estado,usuario.mensaje);
     
     localStorage.setItem("logeo",usuario)
-    return MensajeExito("Éxito","Bienvenido")
+    MensajeExito("Éxito","Bienvenido")
+    return this._router.navigate(["tienda"]);
     
   }
 
