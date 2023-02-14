@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { MensajeError, MensajeExito, MostrarComprobar, MostrarMensaje } from '../FUNCIONES/mensajes';
 import { DIADIFERENCIA, DIADIFERENCIAHORA, HORA_ACTUAL, HORA_NUEVA, HOY } from '../FUNCIONES/moment';
@@ -91,12 +92,12 @@ export class LoginComponent {
       this.capturarActividad("rapidas");
     }
     this.limpiarVariables();
-    //CAPTURAR LA ACTIVIDAD CADA QUE INGRESA
-    this.cargarIdioma(this.lenguaje)
+    //CAPTURAR LA ACTIVIDAD CADA QUE INGRESA    
+    this.cargarIdioma(this.lenguaje);
     await this.capturarActividad("sesion");
-    (await this._user.obtenerUsuarios()).subscribe(res=>{
-      //console.log(res);
-    })
+    // (await this._user.obtenerUsuarios()).subscribe(res=>{
+    //   //console.log(res);
+    // })
     
   }
 
@@ -395,7 +396,7 @@ export class LoginComponent {
 
 
 
-  async capturarActividad(tipo:string){
+  async capturarActividad(tipo:string){    
     const data:any = {};
     //Al cargar la pagina para sesion activas diaris traer de la base ip - fecha - contador;
     //BUSCAR POR IP y TIPO EN BASE
