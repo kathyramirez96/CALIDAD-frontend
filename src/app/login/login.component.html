@@ -1,10 +1,16 @@
 <app-nav
-[ruta]="'inicio'"
+[ruta]="irRegreso()"
 [mensaje]="t_Regresar"
 ></app-nav>
 
-{{obtenerContadores('trasaccion')}} <br>
-{{obtenerContadores('sesion')}}
+{{obtenerContadores('Transacciones no terminadas','trasaccion')}} <br>
+{{obtenerContadores('Sesiones Activas','sesion')}} <br>
+{{obtenerContadores('Ayudas en línea','chatbox')}} <br>
+{{obtenerContadores('Salidas rapidas','rapidas')}} <br>
+{{obtenerContadores('Mensajes de error','error')}} <br>
+{{obtenerTiempoMensaje("Tiempo de navegación")}} <br>
+{{obtenerTiempoMensaje2("Tiempo terminar transaccion")}} <br>
+
 
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

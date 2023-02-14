@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { MensajeError, MensajeExito, MostrarComprobar, MostrarMensaje } from '../FUNCIONES/mensajes';
-import { DIADIFERENCIA, HOY } from '../FUNCIONES/moment';
+import { DIADIFERENCIA, DIADIFERENCIAHORA, HORA_ACTUAL, HORA_NUEVA, HOY } from '../FUNCIONES/moment';
 import { usuario } from '../INTERFACES/usuario.interface';
 import { HttpService } from '../SERVICIOS/servicios.service';
 import { UsuarioService } from '../SERVICIOS/usuario.service';
@@ -58,6 +59,8 @@ export class LoginComponent {
   };
 
 
+  horaInicio:string = "";
+  horaFin:string = "";
 
   titulo:string="";
   titluo2:string="";
@@ -69,13 +72,24 @@ export class LoginComponent {
   t_guard:string="";
   t_Regresar:string="";
   registrar:boolean = false;
+
+  
+
   constructor(
     private readonly _form: FormBuilder,
     private readonly _serv:HttpService,
-    private readonly _user:UsuarioService
-  ) {}
+    private readonly _user:UsuarioService,
+    private readonly _router:Router
+  ) {
+    this.calcularTiempo2();
+  }
 
-  async ngOnInit() {
+  async ngOnInit() {   
+    if(this.calcularTiempo() < 3){
+      
+      console.log("pasa");
+      this.capturarActividad("rapidas");
+    }
     this.limpiarVariables();
     //CAPTURAR LA ACTIVIDAD CADA QUE INGRESA
     this.cargarIdioma(this.lenguaje)
@@ -86,6 +100,41 @@ export class LoginComponent {
     
   }
 
+
+  calcularTiempo(){
+    let res = 0;
+    const entrada:any = localStorage.getItem("entrada")?.split(",");
+    if(entrada === null || entrada === undefined || entrada === "")
+      localStorage.setItem("entrada",HORA_ACTUAL);
+    else{
+      const salida:any = HORA_ACTUAL.split(",");
+      res = DIADIFERENCIAHORA(""+salida,""+entrada);      
+      localStorage.setItem("entrada",HORA_ACTUAL);      
+    }
+    localStorage.setItem("tnav",""+Math.abs(res));
+    return Math.abs(res);
+  }
+
+
+  calcularTiempo2(){
+    localStorage.setItem("nv2",""+0);
+    this.horaInicio = HORA_ACTUAL;
+    console.log(this.horaInicio);
+    
+  }
+
+  calcularIngreso(){
+   this.horaFin = HORA_NUEVA;
+   const diferencia = DIADIFERENCIAHORA(this.horaFin, this.horaInicio);
+   const a = localStorage.setItem("nv2",diferencia)
+   return diferencia;
+  }
+ 
+
+
+  irRegreso(){
+    return "inicio";
+  }
 
   limpiarVariables(){
     localStorage.setItem("humano","false");
@@ -183,27 +232,27 @@ export class LoginComponent {
   async GUARDAR(){
 
     if(!this.validar())
-     return MostrarMensaje("Ingresar todos los datos");
+     return MensajeError("ERROR","Ingresar todos los datos",await this.obtenerIP());
     if(!this.validarCorreo(this.datos.correo))
-      return MostrarMensaje("El correo esta incorrecto por favor verificar");
+      return MensajeError("ERROR","El correo esta incorrecto por favor verificar",await this.obtenerIP());
     if(!this.validarTienrNumeros(this.datos.nombre))
-      return MostrarMensaje("El nombre no puede tener números");
+      return MensajeError("ERROR","El nombre no puede tener números",await this.obtenerIP());
     if(!this.validarTienrNumeros(this.datos.apellido))
-      return MostrarMensaje("El apellido no puede tener números");
+      return MensajeError("ERROR","El apellido no puede tener números",await this.obtenerIP());
     if(!this.validarTienrNumeros(this.datos.provincia))
-      return MostrarMensaje("La provincia no puede tener números");
+      return MensajeError("ERROR","La provincia no puede tener números",await this.obtenerIP());
     if(!this.validarTienrNumeros(this.datos.pais))
-      return MostrarMensaje("El pais no puede tener números");
+      return MensajeError("ERROR","El pais no puede tener números",await this.obtenerIP());
     if(!this.validaLongitud(""+this.datos.cedula,10))
-      return MensajeError("Error","Longitud de la cédula incorrecta");
+      return MensajeError("Error","Longitud de la cédula incorrecta", await this.obtenerIP());
     if(!this.validaLongitud(""+this.datos.telefono,8))
-      return MensajeError("Error","Longitud del teléfono incorrecta, añadir codigo provincia");
+      return MensajeError("Error","Longitud del teléfono incorrecta, añadir codigo provincia",await this.obtenerIP());
     if(!this.validaLongitud(""+this.datos.celular,9))
-      return MensajeError("Error","Longitud del célular es incorrecta");
+      return MensajeError("Error","Longitud del célular es incorrecta",await this.obtenerIP());
     if(!this.validarHumano())
-      return MostrarMensaje("Comprueba que eres humano");
+      return MensajeError("ERROR","Comprueba que eres humano",await this.obtenerIP());
     if(this.CLAVE !== this.datos.clave)
-      return MostrarMensaje("Las claves no coinciden");
+      return MensajeError("ERROR","Las claves no coinciden",await this.obtenerIP());
 
     
     
@@ -211,11 +260,16 @@ export class LoginComponent {
      console.log(a);
 
      if(a.estado === "error")
-      return MensajeError(a.estado,a.mensaje);
+      return MensajeError(a.estado,a.mensaje,await this.obtenerIP());
     this.datos = {};
     return MensajeExito("Éxito","El usuario se creó");
   }
 
+
+  async obtenerIP(){
+    const ip:any = await this._serv.obtenerIP(); 
+    return  ip
+  }
 
   validar(){
     let a = true;
@@ -286,15 +340,28 @@ export class LoginComponent {
 
   async ingresar(){
     if(this.ingresoInfo.user==="" || this.ingresoInfo.pass==="")
-      return MostrarMensaje("Los campos están vacíos");
+      return MensajeError("ERROR","Los campos están vacíos",await this.obtenerIP());
     
     const usuario:any = await lastValueFrom(
       await this._user.iniciarSesion({usuario:this.ingresoInfo.user,clave:this.ingresoInfo.pass}));
     
-    if(usuario.estado === "error")
-      return MensajeError(usuario.estado,usuario.mensaje);
+    console.log(usuario);
     
-    return MensajeExito("Éxito","Bienvenido")
+    if(usuario.estado === "error" )
+      return MensajeError(usuario.estado,usuario.mensaje,await this.obtenerIP());
+
+    if(usuario.status)
+    return MensajeError("ERROR","Informacion Incorrecta",await this.obtenerIP());
+    
+      if(usuario){
+        this.calcularIngreso();
+        const a = localStorage.getItem("nav2")
+        console.log(a);
+        
+        MensajeExito("Éxito","Bienvenido")
+        localStorage.setItem("sesion",usuario)
+        return this._router.navigate(["tienda"]);
+      }
     
   }
 
@@ -306,7 +373,7 @@ export class LoginComponent {
   }
 
 
-  obtenerContadores(tipo:string){
+  obtenerContadores(mensaje:string,tipo:string){
     let contador = 0;
     try{
       contador = JSON.parse(JSON.stringify(localStorage.getItem(tipo)));
@@ -314,7 +381,16 @@ export class LoginComponent {
     }catch(err){
       contador = 0;
     }
-    return ""+tipo+"es = "+contador;
+    return ""+mensaje+"es = "+contador + " veces";
+  }
+
+
+  obtenerTiempoMensaje(mensaje:string){    
+    return ""+mensaje+"es = "+localStorage.getItem("tnav") + " segundos";
+  }
+
+  obtenerTiempoMensaje2(mensaje:string){    
+    return ""+mensaje+"es = "+localStorage.getItem("nv2") + " segundos";
   }
 
 
