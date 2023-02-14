@@ -79,12 +79,12 @@ export class LoginComponent {
 
   async ngOnInit() {
     this.limpiarVariables();
-    //CAPTURAR LA ACTIVIDAD CADA QUE INGRESA
-    this.cargarIdioma(this.lenguaje)
+    //CAPTURAR LA ACTIVIDAD CADA QUE INGRESA    
+    this.cargarIdioma(this.lenguaje);
     await this.capturarActividad("sesion");
-    (await this._user.obtenerUsuarios()).subscribe(res=>{
-      //console.log(res);
-    })
+    // (await this._user.obtenerUsuarios()).subscribe(res=>{
+    //   //console.log(res);
+    // })
     
   }
 
@@ -323,7 +323,7 @@ export class LoginComponent {
 
 
 
-  async capturarActividad(tipo:string){
+  async capturarActividad(tipo:string){    
     const data:any = {};
     //Al cargar la pagina para sesion activas diaris traer de la base ip - fecha - contador;
     //BUSCAR POR IP y TIPO EN BASE
