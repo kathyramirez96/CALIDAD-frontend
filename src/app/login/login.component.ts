@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { MensajeError, MensajeExito, MostrarComprobar, MostrarMensaje } from '../FUNCIONES/mensajes';
 import { DIADIFERENCIA, DIADIFERENCIAHORA, HORA_ACTUAL, HORA_NUEVA, HOY } from '../FUNCIONES/moment';
