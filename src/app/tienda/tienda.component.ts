@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MensajeError, MensajeExito, MostrarMensaje } from '../FUNCIONES/mensajes';
+import { HORA_ACTUAL } from '../FUNCIONES/moment';
 import { PRODUCTOS } from '../SERVICIOS/productos';
 import { HttpService } from '../SERVICIOS/servicios.service';
 
@@ -17,9 +18,12 @@ export class TiendaComponent {
     private readonly _http:HttpService
   ){
  //this.comprobarIngreso();
+ 
  this.cargarProductos();
   }
-  
+
+
+
 
   comprobarIngreso(){
     try{

@@ -4,6 +4,7 @@ import * as mom from 'moment';
 export const HOY = mom().format('YYYY,MM,DD');
 export const HORA_ACTUAL  = mom().format('hh,mm,ss');
 export const HORA_NUEVA = mom().format('hh,mm,ss');
+export const HORA_NORMAL = moment().tz("America/bogota").format('hh,mm,ss');
 export const FECHA_ACTUAL = moment().tz("America/bogota").format('YYYY-MM-DD');
 export const FECHA_NORMAL = moment().tz("America/bogota").format('YYYY-MM-DD-hh-mm-ss');
 export const FECHA_CONSULTA = moment().tz("America/bogota").format('YYYY-MM-DD');

@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { MensajeError, MensajeExito, MostrarComprobar, MostrarMensaje } from '../FUNCIONES/mensajes';
-import { DIADIFERENCIA, DIADIFERENCIAHORA, HORA_ACTUAL, HORA_NUEVA, HOY } from '../FUNCIONES/moment';
+import { DIADIFERENCIA, DIADIFERENCIAHORA, HORA_ACTUAL, HORA_NORMAL, HORA_NUEVA, HOY } from '../FUNCIONES/moment';
 import { usuario } from '../INTERFACES/usuario.interface';
 import { HttpService } from '../SERVICIOS/servicios.service';
 import { UsuarioService } from '../SERVICIOS/usuario.service';
@@ -338,6 +338,14 @@ export class LoginComponent {
   }
 
 
+  tomarTiempo(){
+    const horaInicio = HORA_NORMAL;
+    console.log("inicio",horaInicio);
+    localStorage.setItem("tiempoCompra",horaInicio)
+    window.location.href="tienda";
+  }
+  
+
   async ingresar(){
     if(this.ingresoInfo.user==="" || this.ingresoInfo.pass==="")
       return MensajeError("ERROR","Los campos están vacíos",await this.obtenerIP());
@@ -354,6 +362,7 @@ export class LoginComponent {
     return MensajeError("ERROR","Informacion Incorrecta",await this.obtenerIP());
     
       if(usuario){
+        this.tomarTiempo();
         this.calcularIngreso();
         const a = localStorage.getItem("nav2")
         console.log(a);
@@ -390,7 +399,7 @@ export class LoginComponent {
   }
 
   obtenerTiempoMensaje2(mensaje:string){    
-    return ""+mensaje+"es = "+localStorage.getItem("nv2") + " segundos";
+    return ""+mensaje+"es = "+localStorage.getItem("tiempoTransaccion") + " segundos";
   }
 
 

@@ -52,8 +52,16 @@
 
 <div class="row" style="margin-top: 200px;">
     <div class="col">
-        <h1>Precio: ${{getPrecio()}}</h1> 
+        <h3>Precio: ${{getPrecio()}}</h3> 
     </div>
+    <div>
+        <h3>IVA: ${{getIVA(suma)}}</h3> 
+    </div>
+    <div class="col">
+        <h3>Subtotal: ${{getSubtotal(suma,iva)}}</h3>
+        
+    </div>
+    
     <div class="col">
         <button type="button" class="btn btn-outline-success" (click)="comprar(suma)">COMPRAR</button>
     </div>

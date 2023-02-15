@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MensajeError, MensajeExito, MostrarMensaje, MostrarPayMode } from '../FUNCIONES/mensajes';
+import { DIADIFERENCIAHORA, HORA_ACTUAL, HORA_NORMAL } from '../FUNCIONES/moment';
 import { HttpService } from '../SERVICIOS/servicios.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class CarritoComponent implements OnInit{
 
   productos:any=[];
   suma:any = 0;
+  iva:any=0;
   constructor(
     private readonly _router:Router,
     private readonly _http:HttpService
@@ -30,13 +32,25 @@ export class CarritoComponent implements OnInit{
 
   cancelarCompra(){
     localStorage.setItem("carrito","");
+    this.guardarTiempo();
     MensajeExito("Exito", "Carrito Eliminado");
     this._router.navigate(["tienda"]);
   }
 
   terminarCompra(){
     localStorage.setItem("carrito","");
+    this.guardarTiempo();
     this._router.navigate(["tienda"]);
+  }
+
+  guardarTiempo(){
+    const inicio:any = localStorage.getItem("tiempoCompra");
+    const fin = HORA_NORMAL;
+    const diferencia = DIADIFERENCIAHORA(fin,inicio);
+    console.log(inicio);
+    console.log(fin);
+    console.log(diferencia);
+    localStorage.setItem("tiempoTransaccion",diferencia);
   }
 
 
@@ -98,6 +112,15 @@ export class CarritoComponent implements OnInit{
       this.suma += +sub;
     }
     return this.suma;
+  }
+
+  getIVA(total:any){
+    this.iva =total * 0.12 
+    return this.iva;
+  }
+
+  getSubtotal(total:any,iva:any){
+    return total - iva;
   }
 
 }
