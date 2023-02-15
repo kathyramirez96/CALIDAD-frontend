@@ -2,6 +2,25 @@
 [ruta]="irRegreso()"
 [mensaje]="'SALIR'"
 ></app-nav>
+
+
 <div style="text-align: center;">
-    <img src="./../../assets/descarga.png" alt="" width="100%">
+    <div class="row" style="margin-bottom: 100px;">
+        <div class="col-10">
+            <h1>PRODUCTOS</h1>
+        </div>
+        <div class="col-2">
+            <button (click)="irCarrito()">
+                <img src="./../../assets/carrito.png" alt="" width="50px">
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4"  *ngFor="let p of productos" style="margin-bottom: 50px;">
+            <b><h4>{{p.nombre}}</h4></b> 
+            <img [src]="p.imagen" width="150px" height="150px">
+            <h5>PRCIO: ${{p.precio}}</h5>
+            <button type="button" class="btn btn-outline-info" (click)="add(p)">Añadir</button>
+        </div>
+    </div>
 </div>

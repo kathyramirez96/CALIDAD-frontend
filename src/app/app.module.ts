@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalComponent } from './componentes/modal/modal.component';
 import { TiendaComponent } from './tienda/tienda.component';
+import { CarritoComponent } from './carrito/carrito.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TiendaComponent } from './tienda/tienda.component';
     ChatboxComponent,
     LoginComponent,
     ModalComponent,
-    TiendaComponent
+    TiendaComponent,
+    CarritoComponent
   ],
   imports: [
     BrowserModule,

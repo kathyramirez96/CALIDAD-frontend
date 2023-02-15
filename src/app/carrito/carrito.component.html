@@ -1,0 +1,61 @@
+<app-nav
+[ruta]="irRegreso()"
+[mensaje]="'SALIR'"
+></app-nav>
+
+
+<div style="text-align: center;">
+    <div class="row" style="margin-bottom: 100px;">
+        <div class="col-10">
+            <h1>PRODUCTOS</h1>
+        </div>
+        <div class="col-2">
+            <div class="col-2">
+                <button (click)="cancelarCompra()">
+                    <img src="./../../assets/cancelar.png" alt="" width="50px">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngFor="let p of productos">
+        <div class="col-2">
+            {{p.id}}
+        </div>
+
+        <div class="col-2">
+            <img [src]="p.imagen" alt="" width="50px" height="50px">
+        </div>
+
+        <div class="col-2">
+            {{p.nombre}}
+        </div>
+
+        <div class="col-2">
+            ${{p.precio}}
+        </div>
+
+        <div class="col-2">
+            <input type="number" [(ngModel)]="p.cantidad" placeholder="0">
+            
+        </div>
+
+        <div class="col-2">
+            <button
+            (click)="quitarCarrito(p)"
+            >
+        <img src="./../../assets/quitar.webp" width="30px">
+        </button>
+            
+        </div>
+    </div>
+
+<div class="row" style="margin-top: 200px;">
+    <div class="col">
+        <h1>Precio: ${{getPrecio()}}</h1> 
+    </div>
+    <div class="col">
+        <button type="button" class="btn btn-outline-success" (click)="comprar(suma)">COMPRAR</button>
+    </div>
+</div>
+</div>

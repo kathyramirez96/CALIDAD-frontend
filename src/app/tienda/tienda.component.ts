@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MensajeError, MensajeExito, MostrarMensaje } from '../FUNCIONES/mensajes';
+import { PRODUCTOS } from '../SERVICIOS/productos';
+import { HttpService } from '../SERVICIOS/servicios.service';
 
 @Component({
   selector: 'app-tienda',
@@ -7,10 +10,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./tienda.component.scss']
 })
 export class TiendaComponent {
+  productos:any=[];
+  carrito:any=[];
   constructor(
-    private readonly _router:Router
+    private readonly _router:Router,
+    private readonly _http:HttpService
   ){
- this.comprobarIngreso();
+ //this.comprobarIngreso();
+ this.cargarProductos();
   }
   
 
@@ -27,6 +34,32 @@ export class TiendaComponent {
   irRegreso(){
     localStorage.setItem("sesion","")
     return "inicio";
+  }
+
+
+  cargarProductos(){
+    this.productos = PRODUCTOS;
+  }
+
+  async obtenerIP(){
+    const ip:any = await this._http.obtenerIP(); 
+    return  ip
+  }
+
+  async add(producto:any){
+    const existe = this.carrito.find((p:any) => p.nombre === producto.nombre);
+    if(existe === undefined){
+      this.carrito.push(producto);
+      
+    MensajeExito("Genial",`${producto.nombre} se añadio al carrito`)
+    }else{
+      MensajeError("Ups!","Ya esta en el carrito",await this.obtenerIP())
+    }
+  }
+
+  irCarrito(){
+    localStorage.setItem("carrito",JSON.stringify(this.carrito));
+    this._router.navigate(["carrito"]);
   }
 
 }

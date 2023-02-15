@@ -42,6 +42,31 @@ export function MensajeExito(titulo:string,mensaje:string){
 }
 
 
+export async function MostrarPayMode(total:any){
+  let respuesta = false;
+  await Swal.fire({
+    title: 'Do you want to save the changes?',
+    html:
+    '<img src="./../../assets/pago.gif"  width="450px"></img>',
+    showDenyButton: true,
+    showCancelButton: false,
+    confirmButtonText: 'PAGAR $'+total,
+    denyButtonText: `Calcelar Compra`,
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      Swal.fire('Sus productos llegarán dentro de los 15 días', '', 'success')
+      respuesta = true;
+    } else if (result.isDenied) {
+      Swal.fire('Se cancelo la compra', '', 'info')
+      respuesta = false;
+    }
+  })
+  return respuesta;
+}
+
+
+
 
 export async function capturarActividad(tipo:string, ip:string){
   const data:any = {};
