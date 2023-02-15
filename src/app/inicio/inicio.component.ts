@@ -35,6 +35,11 @@ export class InicioComponent {
     return Math.abs(res);
   }
 
+  obtenerTiempoMensaje(mensaje:string){    
+    return ""+mensaje+"es = "+localStorage.getItem("tnav") + " segundos";
+  }
+
+
   cargarIdioma(len:string){    
     console.log(HORA_ACTUAL);
 

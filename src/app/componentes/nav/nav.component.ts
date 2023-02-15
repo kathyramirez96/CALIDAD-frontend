@@ -28,7 +28,8 @@ export class NavComponent {
   }
 
   navegarHacia(){
-    this._router.navigate([this.ruta])
+    window.location.href = this.ruta;
+    //this._router.navigate([this.ruta])
   }
 
 

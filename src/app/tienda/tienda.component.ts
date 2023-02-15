@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MensajeError, MensajeExito, MostrarMensaje } from '../FUNCIONES/mensajes';
-import { HORA_ACTUAL } from '../FUNCIONES/moment';
+import { DIADIFERENCIAHORA, HORA_ACTUAL } from '../FUNCIONES/moment';
 import { PRODUCTOS } from '../SERVICIOS/productos';
 import { HttpService } from '../SERVICIOS/servicios.service';
 
@@ -18,12 +18,29 @@ export class TiendaComponent {
     private readonly _http:HttpService
   ){
  //this.comprobarIngreso();
- 
+ this.calcularTiempo();
  this.cargarProductos();
   }
 
 
 
+  obtenerTiempoMensaje(mensaje:string){    
+    return ""+mensaje+"es = "+localStorage.getItem("tnav") + " segundos";
+  }
+
+  calcularTiempo(){
+    let res = 0;
+    const entrada:any = localStorage.getItem("entrada")?.split(",");
+    if(entrada === null || entrada === undefined || entrada === "")
+      localStorage.setItem("entrada",HORA_ACTUAL);
+    else{
+      const salida:any = HORA_ACTUAL.split(",");
+      res = DIADIFERENCIAHORA(""+salida,""+entrada);      
+      localStorage.setItem("entrada",HORA_ACTUAL);      
+    }
+    localStorage.setItem("tnav",""+Math.abs(res));
+    return Math.abs(res);
+  }
 
   comprobarIngreso(){
     try{
